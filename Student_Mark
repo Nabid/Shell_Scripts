@@ -1,0 +1,32 @@
+#./bin/bash
+#Student_Mark
+#Usage: Student_Mark
+echo Marks \i\n
+echo Subject \1:
+read sub1
+echo Subject \2:
+read sub2
+echo Subject \3:
+read sub3
+echo Subject \4:
+read sub4
+echo Subject \5:
+read sub5
+
+totMark=`echo $sub1+$sub2+$sub3+$sub4+$sub5 |bc`
+echo Total Marks Obtained
+
+echo = $sub1 + $sub2 + $sub3 + $sub4 + $sub5
+echo = $totMark
+
+div=`echo $totMark\*100/500 |bc`
+echo Percentage Obtained $div\%
+
+if test $div -ge 60
+	then 	echo First Division.
+elif test $div -ge 50
+	then 	echo Second Division.
+elif test $div -ge 40
+	then 	echo Third Division.
+else 	 	echo Failed.
+fi

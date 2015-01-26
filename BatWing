@@ -1,0 +1,134 @@
+#./bin/bash
+#BatWing
+#Usage: ./BatWing
+#Comments..............
+#......................
+tmp=NULL
+cmnd=NULL
+param=NULL
+bquit="quit"
+bfc="fcmp"
+
+touch _history tmp Cmpr
+
+whoami > tmp
+read broot < tmp
+logname > tmp
+read usr < tmp
+
+function setNull {
+	cmnd=NULL
+	param=NULL
+}
+
+while true
+do
+	tput clear
+	tput cup 1 15
+	tput setaf 3
+	tput rev
+	echo "B a t W i n g     T e r m i n a l"
+	tput sgr0
+	tput bold
+	tput cup 2 25
+	tput setaf 4
+	echo "A B O U T"
+	tput sgr0
+	tput cup 3 5
+	tput setaf 4
+	echo "$ Author : IMTEAJ, MD. NABID"
+	tput sgr0
+	tput cup 4 5
+	tput setaf 4
+	echo "$ ID     :	11-19998-3"
+	tput sgr0
+	tput cup 5 5
+	tput setaf 4
+	echo "$ Course : Operating System [E]"
+	tput sgr0
+	tput cup 6 5
+	tput setaf 4
+	echo "$ Faculty: Bayejid Asik"
+	tput sgr0
+	tput cup 7 5
+	tput setaf 4
+	echo "$ Note   : Self designed terminal for Class Project"
+	tput sgr0
+	tput cup 8 5
+	tput setaf 4
+	echo "$ Ref.   : various resources from world wide web"
+	tput sgr0
+	
+	pwd > tmp
+	read cwd < tmp
+	tput cup 9 0
+	tput setaf 2
+	echo -n "[Batwing~$broot@$usr]$cwd# "
+	read cmnd param
+	
+	if [[ $cmnd = "" ]]
+	then	continue
+	elif [[ $cmnd = $bquit ]]
+	then	tput clear
+		rm _history tmp Cmpr
+		exit
+	elif [[ $cmnd = $bfc ]]
+	then	if [[ $param = "" ]]
+		then echo "Enter files to compare: "
+		echo -n "<file1> "
+		read file1
+		echo -n "<file2> "
+		read file2 
+		echo "File_1-> $file1"
+		echo "File_2-> $file2"
+		./fcmp $file1 $file2
+		cat -n Cmpr
+		fi
+	elif [[ $cmnd = "history" ]]
+	then	if [[ $param = "" ]]
+		then echo "Command [Option] -> Comment"
+		     echo "history -v       -> view history"
+		     echo "history -d       -> delete history"
+		elif [[ $param = "-v" ]]
+		then cat -n _history	
+		elif [[ $param = "-d" ]]
+		then	rm _history
+			touch _history
+			chmod 777 _history
+		fi
+	elif [[ $cmnd = "os_info" ]]
+	then	lsb_release -d
+		lsb_release -r
+		lsb_release -c
+		echo -n "Type: 	   "
+		/bin/uname -m
+	elif [[ $cmnd = "filesystem" ]]
+	then	df -h
+	elif [[ $cmnd = "hardware_info" ]]
+	then	cat /proc/cpuinfo | egrep 'name' > tmp
+		read model < tmp
+		echo $model
+		cat /proc/cpuinfo | egrep 'cores' > tmp
+		read crs < tmp
+		echo $crs
+	elif [[ $cmnd = "lang" ]]
+	then 	set | egrep '(^LANG|LC_)' > tmp
+		read lang < tmp
+		echo $lang
+	elif [[ $cmnd = "user_info" ]]
+	then	echo "UserName	  : " $usr
+		echo "Loggeg in as: " $broot
+		echo -n "Details  : "
+		cat /etc/passwd | grep $usr
+	elif [[ $cmnd = "shutdown" ]]
+  then reboot -$param
+  elif [[ $cmnd = "help" ]]
+  then  cat -n Clist
+	elif [[ $cmd = "cd" ]]
+	then 	$cmd $param
+	fi
+	`echo $cmnd $param >> _history`
+	setNull
+	tput setaf 8
+	read -p "Press<Enter>"
+done

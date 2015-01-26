@@ -1,0 +1,20 @@
+#/bin/bash
+#bashEx
+#Usage: ./bashEx
+echo Basic Salary?:
+read basicSal
+hra=0
+da=0
+gross=0
+if test $basicSal -lt 1500
+	then hra=`expr \($basicSal*10\)/100 |bc`
+	     da=`expr \($basicSal*90\)/100 |bc`
+	     gross=`expr $basicSal+$hra+$da |bc`
+elif test $basicSal -ge 1500
+	then hra=500
+	     da=`expr \($basicSal*98\)/100 |bc`
+	     gross=`expr $basicSal+$hra+$da |bc`
+fi
+echo Gross Salary:
+echo $basicSal + $hra + $da = $gross
+
