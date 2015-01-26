@@ -40,7 +40,7 @@ else
 		# create symbolic link
 		echo "Creating soft link to this script..."
 		ln -s "$currentDir/drop_cache.sh" $fileName
-		echo "Soft link created successfully. From now on just type ${bold}drop_cache${NC} as root to drop cache."
+		echo "Soft link created successfully. From now on just type ${bold}sudo drop_cache${NC} as root to drop cache."
 	fi
 
 	# drop cache
